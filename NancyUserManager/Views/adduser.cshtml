@@ -1,0 +1,84 @@
+﻿@{
+    Layout = "Shared/_Layout.cshtml";
+    ViewBag.Title = "Add a New User";
+}
+<script src="http://malsup.github.com/jquery.form.js"></script> 
+<link rel="stylesheet" href="/Content/myStyles.css" />
+<script>
+    $(document).ready(function () {
+        var options = {
+            target: '#output1',   // target element(s) to be updated with server response 
+            beforeSubmit: window.validate,  // pre-submit callback to validate 
+            success: window.showResponse,  // post-submit callback 
+            url: '/adduser',         // override for form's 'action' attribute 
+            type: 'post',        // 'get' or 'post', override for form's 'method' attribute 
+            //dataType: 'json',        // 'xml', 'script', or 'json' (expected server response type)
+            clearForm: false,        // clear all form fields after successful submit 
+            resetForm: false        // reset the form after successful submit 
+            // $.ajax options can be used here too, for example: 
+            //timeout:   3000 
+        };
+
+        // bind form using 'ajaxForm' 
+        $('#userForm').ajaxForm(options);
+        // hide the success panel
+        $('#successPanel').hide();
+    });
+
+    // pre-submit callback 
+    function validate() {
+    }
+    // post-submit callback 
+    function showResponse(responseText, statusText) {
+
+        // if there is an error in the string then switch to bootrap error style
+        var strE = "Error";
+        var index = responseText.indexOf(strE);// and get its index.
+        if (index != -1) { // If the index is not -1 then the term was matched in the string,
+            $("#successPanel").removeClass("alert alert-success");
+            $("#successPanel").addClass("alert alert-danger");
+        } else {
+            $("#successPanel").removeClass("alert alert-danger");
+            $("#successPanel").addClass("alert alert-success");
+            $('#userForm').resetForm(); // successful insert then clear form
+        }
+
+        $('#successPanel').show();
+     
+        
+    }
+</script> 
+ 
+<div class="form-wrap">
+    <h4>Add a User</h4>
+    <form class="form-horizontal form-small" role="form" id="userForm" action="/adduser" method="POST">
+            <div class="form-group">
+                <label for="Emailinput">Email</label>
+                <input type="email" id="Emailinput" name="Email" class="form-control"  required title="Must be a valid email">
+            </div>
+    
+            <div class="form-group">
+                <label for="FirstNameinput">First Name</label>
+                <input type="text" id="FirstNameinput" name="FirstName" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="LastNameinput">Last Name</label>
+                <input type="text" id="LastNameinput" name="LastName" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label for="passwordinput">Password</label>
+                <input type="password" id="passwordinput" name="Password" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="save"></label>
+                <button id="save" name="save" class="btn btn-inverse">save</button>
+                <a href="/users">cancel</a>
+            </div>
+    </form>
+    <div id="successPanel" class="alert alert-success" style="width:600px">
+        <div id="output1">
+        </div>
+    </div>
+</div>

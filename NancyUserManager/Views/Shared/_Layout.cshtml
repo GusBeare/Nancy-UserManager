@@ -1,0 +1,48 @@
+﻿@using Nancy.Security
+
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <title>@ViewBag.Title</title>   
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css" />
+</head>
+
+<body>
+<div class="container-fluid">
+<h4>Beare Bros Property Income</h4>
+   
+    <div class="row">
+        <div class="col-sm-7 col-md-9 col-lg-9">
+        </div>
+        <div class="col-sm-5 col-md-3 col-lg-3">
+            <div class="">
+                @if (@Html.RenderContext.Context.CurrentUser.IsAuthenticated())
+                {
+                    <p><small><span style="padding-right:15px"><em>@Html.RenderContext.Context.CurrentUser.UserName</em></span>
+                        <a href="@Url.Content("~/logout")">Logout</a></small></p>
+                }
+                else
+                {
+                    <p><small><a href="@Url.Content("~/login")">Login</a></small></p>
+                }
+            </div>
+        </div>
+        </div>
+<div class="row">
+<div class="col-sm-2 col-md-2 col-lg-2">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li><a href="/AddUser">Add User</a></li>
+        <li><a href="/Users">Manage Users</a></li>
+    </ul>
+</div>
+    <div class="col-sm-10 col-md-10 col-lg-10">
+        <p>@RenderBody()</p>    
+    </div>
+          </div>
+        </div>
+  </body>
+</html>

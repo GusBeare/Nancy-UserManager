@@ -1,0 +1,70 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<BeareAccounts.Models.Users>
+
+
+@{
+    Layout = "Shared/_Layout.cshtml";
+    ViewBag.Title = "Delete a User";
+}
+<script src="http://malsup.github.com/jquery.form.js"></script> 
+<link rel="stylesheet" href="/Content/myStyles.css" />
+<script>
+    $(document).ready(function () {
+        var options = {
+            target: '#output1',   // target element(s) to be updated with server response 
+            success: window.showResponse,  // post-submit callback 
+            url: '/DeleteUser/@Model.Guid',         // override for form's 'action' attribute 
+            type: 'post',        // 'get' or 'post', override for form's 'method' attribute 
+            dataType: null,        // 'xml', 'script', or 'json' (expected server response type) 
+            clearForm: true,        // clear all form fields after successful submit 
+            resetForm: true        // reset the form after successful submit 
+        };
+
+        // bind form using 'ajaxForm' 
+        $('#userForm').ajaxForm(options);
+        // hide the success panel
+        $('#successPanel').hide();
+    });
+    function showResponse(responseText, statusText) {
+
+        // hide the delete button
+        document.getElementById('btndelete').style.visibility = 'hidden';
+        $('#successPanel').show();
+        //alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
+          //  '\n\nThe output div should have already been updated with the responseText.');
+    }
+</script> 
+ 
+<form class="form-horizontal form-small" role="form" id="userForm" action="/DeleteUser/@Model.Guid" method="POST">
+    <fieldset>
+        <legend>delete user?</legend>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <div class="form-control" id="Email">
+                <span class="form-control-static">@Model.Email</span>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="FirstName">First Name</label>
+            <div class="form-control" id="FirstName">
+                <span class="form-control-static">@Model.FirstName</span>
+            </div></div>
+
+        <div class="form-group">
+            <label for="LastName">Last Name</label>
+            <div class="form-control" id="LastName">
+                <span class="form-control-static">@Model.LastName</span>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button id="btndelete" name="save" class="btn btn-warning">delete</button>
+            <a href="/users">cancel</a>
+        </div>
+    </fieldset>
+</form>
+<div id="successPanel" class="alert alert-success" style="width:600px">
+    <div id="output1">
+    </div>
+</div>
+
+

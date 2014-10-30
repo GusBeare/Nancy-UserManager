@@ -1,0 +1,79 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!--
+This file is used by the publish/package process of your Web project. You can customize the behavior of this process
+by editing this MSBuild file. In order to learn more about this please visit http://go.microsoft.com/fwlink/?LinkID=208121. 
+-->
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <TimeStampOfAssociatedLegacyPublishXmlFile />
+    <_PublishTargetUrl>C:\Work\Nancy\BeareAccounts Published</_PublishTargetUrl>
+  </PropertyGroup>
+  <ItemGroup>
+    <File Include="bin/BCrypt.Net.dll">
+      <publishTime>10/13/2014 14:58:04</publishTime>
+    </File>
+    <File Include="bin/BeareAccounts.dll">
+      <publishTime>10/30/2014 07:58:57</publishTime>
+    </File>
+    <File Include="bin/Nancy.Authentication.Forms.dll">
+      <publishTime>10/12/2014 21:28:08</publishTime>
+    </File>
+    <File Include="bin/Nancy.dll">
+      <publishTime>10/12/2014 20:54:16</publishTime>
+    </File>
+    <File Include="bin/Nancy.Hosting.Aspnet.dll">
+      <publishTime>10/12/2014 21:58:56</publishTime>
+    </File>
+    <File Include="bin/Nancy.ViewEngines.Razor.dll">
+      <publishTime>10/14/2014 07:13:00</publishTime>
+    </File>
+    <File Include="bin/Simple.Data.Ado.dll">
+      <publishTime>10/28/2014 08:14:13</publishTime>
+    </File>
+    <File Include="bin/Simple.Data.dll">
+      <publishTime>10/28/2014 08:14:13</publishTime>
+    </File>
+    <File Include="bin/Simple.Data.SqlServer.dll">
+      <publishTime>10/28/2014 08:14:13</publishTime>
+    </File>
+    <File Include="bin/System.Web.Razor.dll">
+      <publishTime>10/14/2014 07:11:38</publishTime>
+    </File>
+    <File Include="Content/myStyles.css">
+      <publishTime>10/23/2014 17:23:57</publishTime>
+    </File>
+    <File Include="packages.config">
+      <publishTime>10/28/2014 20:52:30</publishTime>
+    </File>
+    <File Include="Views/AddUser.cshtml">
+      <publishTime>10/29/2014 14:49:57</publishTime>
+    </File>
+    <File Include="Views/Culture.cshtml">
+      <publishTime>10/28/2014 22:33:24</publishTime>
+    </File>
+    <File Include="Views/DeleteUser.cshtml">
+      <publishTime>10/29/2014 14:47:54</publishTime>
+    </File>
+    <File Include="Views/EditUser.cshtml">
+      <publishTime>10/29/2014 14:52:18</publishTime>
+    </File>
+    <File Include="Views/Home.cshtml">
+      <publishTime>10/18/2014 09:04:28</publishTime>
+    </File>
+    <File Include="Views/Login.cshtml">
+      <publishTime>10/24/2014 17:14:52</publishTime>
+    </File>
+    <File Include="Views/Secure.cshtml">
+      <publishTime>10/22/2014 07:35:52</publishTime>
+    </File>
+    <File Include="Views/Shared/_Layout.cshtml">
+      <publishTime>10/29/2014 14:49:50</publishTime>
+    </File>
+    <File Include="Views/Users.cshtml">
+      <publishTime>10/29/2014 14:10:30</publishTime>
+    </File>
+    <File Include="Web.config">
+      <publishTime>10/30/2014 07:58:58</publishTime>
+    </File>
+  </ItemGroup>
+</Project>
