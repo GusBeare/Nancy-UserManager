@@ -1,3 +1,5 @@
+using Nancy.Cryptography;
+
 namespace NancyUserManager
 {
     using Nancy;
@@ -31,11 +33,18 @@ namespace NancyUserManager
             //
             // The pipelines passed in here are specific to this request,
             // so we can add/remove/update items in them as we please.
+
+            // create a custom cryptography config
+            var cryptographyConfiguration = new CryptographyConfiguration(
+            new RijndaelEncryptionProvider(new PassphraseKeyGenerator("SuperSecretPass", new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 })),
+            new DefaultHmacProvider(new PassphraseKeyGenerator("UberSuperSecure", new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 })));
+
             var formsAuthConfiguration =
-                new FormsAuthenticationConfiguration()
+                new FormsAuthenticationConfiguration
                 {
                     RedirectUrl = "~/login",
                     UserMapper = requestContainer.Resolve<IUserMapper>(),
+                    CryptographyConfiguration = cryptographyConfiguration
                 };
 
             FormsAuthentication.Enable(pipelines, formsAuthConfiguration);

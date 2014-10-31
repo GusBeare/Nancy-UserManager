@@ -41,3 +41,10 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+*.suo
+NancyUserManager/bin/NancyUserManager.dll
+NancyUserManager/bin/NancyUserManager.pdb
+NancyUserManager/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+NancyUserManager/obj/Debug/NancyUserManager.dll
+*.pdb
