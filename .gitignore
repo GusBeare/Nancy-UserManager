@@ -48,3 +48,6 @@ NancyUserManager/bin/NancyUserManager.pdb
 NancyUserManager/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
 NancyUserManager/obj/Debug/NancyUserManager.dll
 *.pdb
+bin/
+obj/
+debug/
