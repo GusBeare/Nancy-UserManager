@@ -21,6 +21,7 @@ namespace NancyUserManager.Modules.User
                 return View["EditUser", userRow];
 
             };
+
             Post["/EditUser/{Guid}"] = parameters =>
             {
                 var model = new Users();

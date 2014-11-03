@@ -15,6 +15,7 @@ namespace NancyUserManager.Models
     }
 
     // we need a subset of user for the edit form so that we can just pass the fields we want to update to simple.data
+    // if you pass a complete user model to simple.data it tries to update all the fields and not just the ones we have in the form
     public class EditUser
     {
         public Guid Guid { get; set; }   
