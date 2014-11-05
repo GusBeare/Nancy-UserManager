@@ -45,7 +45,8 @@ Temporary Items
 bin/
 obj/
 debug/
-packages/
+/packages/
+!packages/repositories.config
 *.suo
 NancyUserManager/bin/NancyUserManager.dll
 NancyUserManager/bin/NancyUserManager.pdb
