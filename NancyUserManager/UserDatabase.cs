@@ -12,13 +12,15 @@ namespace NancyUserManager
     {
         public static string DeleteUser(Guid identifier)
         {
-            // use Simple.Data to delete the user
+            // use Simple.Data to delete the user and their roles
             var db = Database.Open();
             var uRow = db.Users.FindByGuid(identifier);
-            if (uRow !=null)
-                db.Users.DeleteByGuid(identifier);
+            if (uRow == null) return null;
 
-            return uRow != null ? uRow.Email : null;
+            db.UserRoles.DeleteByUserGuid(identifier); // must delete the user roles before we delete the user!!
+            db.Users.DeleteByGuid(identifier);
+
+            return uRow.Email;
         }
 
         public static Users GetUserByEmail(string email)
@@ -27,7 +29,7 @@ namespace NancyUserManager
             var db = Database.Open();
             var uRow = db.Users.FindByEmail(email);
             return uRow;
-            
+
         }
         public static Users GetUserByGuid(Guid identifier)
         {
@@ -41,8 +43,8 @@ namespace NancyUserManager
         {
             // simple data used to get all the users and ordered by create date
             var db = Database.Open();
-            IEnumerable<Users> uRow = db.Open().Users.All().OrderByDescending(db.Users.CreateDate);
-            return uRow;
+            IEnumerable<Users> uRows = db.Open().Users.All().OrderByDescending(db.Users.CreateDate);
+            return uRows;
         }
 
 
@@ -51,7 +53,7 @@ namespace NancyUserManager
         {
             // get the user row details from DB
             var u = GetUserByEmail(email);
-          
+
             if (u == null) return null;
             var doesPasswordMatch = BCrypt.Net.BCrypt.Verify(password, u.Hash);
 
@@ -59,21 +61,43 @@ namespace NancyUserManager
             return null;
         }
 
+        public static IEnumerable<Roles> GetRoles()
+        {
+            // simple data used to get all the roles 
+            var db = Database.Open();
+            IEnumerable<Roles> r = db.Open().Roles.All().OrderByDescending(db.Roles.RoleName);
+            return r;
+
+        }
+
+        public static IEnumerable<RoleNames> GetUserRoles(Guid identifier)
+        {
+            var db = Database.Open();
+            IEnumerable<RoleNames> uRoles = db.UserRoles.FindAllByUserGuid(identifier)
+            .Select(
+            db.UserRoles.Roles.RoleName);
+
+            return uRoles;
+        }
         public IUserIdentity GetUserFromIdentifier(Guid identifier, NancyContext context)
         {
             var u = GetUserByGuid(identifier);
+            var listofRoles = GetUserRoles(identifier);
+
+            // create a simple string array and loop the list of roles and add them to it.
+            var Claims = new List<string>();
+            foreach (var item in listofRoles)
+            {
+                Claims.Add(item.RoleName);
+            }
+
             return u == null
                 ? null
                 : new DemoUserIdentity
                 {
                     UserName = u.Email,
                     Guid = u.Guid,
-                    Claims = new[]
-                    {
-                        "Admin",
-                        "Editor",
-                        "ViewOnly"
-                    }
+                    Claims = Claims
                 };
         }
     }

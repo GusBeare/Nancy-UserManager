@@ -38,9 +38,7 @@
         <legend>edit user?</legend>
         <div class="form-group">
             <label for="Email">Email</label>
-            <div class="form-control" id="Email">
-                <span class="form-control-static">@Model.Email.Trim()</span>
-            </div>
+            <input type="text" id="Email" name="Email" class="form-control" value="@Model.Email.Trim()" disabled>
         </div>
        
         <div class="form-group">

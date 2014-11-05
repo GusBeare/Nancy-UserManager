@@ -11,6 +11,14 @@ namespace NancyUserManager.Modules.User
     {
         public EditUserModule()
         {
+            // add an after hook to send the user to access denied if they are NOT admin
+            After += context =>
+            {
+                if (context.Response.StatusCode == HttpStatusCode.Forbidden)
+                    context.Response = this.Response.AsRedirect("/denied");
+            };
+            this.RequiresAnyClaim(new[] { "admin" });
+
             // show the edit user form
             Get["/EditUser/{Guid}"] = parameters =>
             {
@@ -18,7 +26,7 @@ namespace NancyUserManager.Modules.User
 
                 // get the user row to be edit and send it to the View
                 var userRow = UserDatabase.GetUserByGuid(parameters.Guid);
-                return View["EditUser", userRow];
+                return View["Views/User/EditUser", userRow];
 
             };
 

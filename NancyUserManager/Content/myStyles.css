@@ -1,4 +1,7 @@
 ﻿.form-small .form-control {
     width: 220px;
 }
-
+.form-horizontal .form-group {
+margin-right: -15px;
+margin-left: 0; 
+}

@@ -1,6 +1,5 @@
 ﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<NancyUserManager.Models.Users>
 
-
 @{
     Layout = "Shared/_Layout.cshtml";
     ViewBag.Title = "Delete a User";
@@ -26,11 +25,9 @@
     });
     function showResponse(responseText, statusText) {
 
-        // hide the delete button
-        document.getElementById('btndelete').style.visibility = 'hidden';
+        // remove the buttons and show the alert
+        $("#formbuttons").remove();
         $('#successPanel').show();
-        //alert('status: ' + statusText + '\n\nresponseText: \n' + responseText +
-          //  '\n\nThe output div should have already been updated with the responseText.');
     }
 </script> 
  
@@ -39,27 +36,24 @@
         <legend>delete user?</legend>
         <div class="form-group">
             <label for="Email">Email</label>
-            <div class="form-control" id="Email">
-                <span class="form-control-static">@Model.Email</span>
-            </div>
+            <input type="text" id="Email" name="Email" class="form-control" value="@Model.Email.Trim()" disabled>
         </div>
+       
         <div class="form-group">
-            <label for="FirstName">First Name</label>
-            <div class="form-control" id="FirstName">
-                <span class="form-control-static">@Model.FirstName</span>
-            </div></div>
-
-        <div class="form-group">
-            <label for="LastName">Last Name</label>
-            <div class="form-control" id="LastName">
-                <span class="form-control-static">@Model.LastName</span>
-            </div>
+            <label for="FirstNameinput">First Name</label>
+            <input type="text" id="FirstNameinput" name="FirstName" class="form-control" value="@Model.FirstName.Trim()" disabled>
         </div>
 
         <div class="form-group">
+            <label for="LastNameinput">Last Name</label>
+            <input type="text" id="LastNameinput" name="LastName" class="form-control" value="@Model.LastName.Trim()" disabled>
+        </div>
+
+        <div class="form-group" id="formbuttons">
             <button id="btndelete" name="save" class="btn btn-warning">delete</button>
             <a href="/users">cancel</a>
         </div>
+
     </fieldset>
 </form>
 <div id="successPanel" class="alert alert-success" style="width:600px">

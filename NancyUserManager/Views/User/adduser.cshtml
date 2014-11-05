@@ -1,6 +1,8 @@
 ﻿@{
     Layout = "Shared/_Layout.cshtml";
     ViewBag.Title = "Add a New User";
+
+    var roles = NancyUserManager.UserDatabase.GetRoles();
 }
 <script src="http://malsup.github.com/jquery.form.js"></script> 
 <link rel="stylesheet" href="/Content/myStyles.css" />
@@ -12,11 +14,8 @@
             success: window.showResponse,  // post-submit callback 
             url: '/adduser',         // override for form's 'action' attribute 
             type: 'post',        // 'get' or 'post', override for form's 'method' attribute 
-            //dataType: 'json',        // 'xml', 'script', or 'json' (expected server response type)
             clearForm: false,        // clear all form fields after successful submit 
             resetForm: false        // reset the form after successful submit 
-            // $.ajax options can be used here too, for example: 
-            //timeout:   3000 
         };
 
         // bind form using 'ajaxForm' 
@@ -44,14 +43,13 @@
         }
 
         $('#successPanel').show();
-     
-        
+
+
     }
 </script> 
- 
-<div class="form-wrap">
-    <h4>Add a User</h4>
-    <form class="form-horizontal form-small" role="form" id="userForm" action="/adduser" method="POST">
+
+<h4>Add a User</h4>
+        <form class="form-horizontal form-small" role="form" id="userForm" action="/adduser" method="POST">
             <div class="form-group">
                 <label for="Emailinput">Email</label>
                 <input type="email" id="Emailinput" name="Email" class="form-control"  required title="Must be a valid email">
@@ -71,14 +69,29 @@
                 <label for="passwordinput">Password</label>
                 <input type="password" id="passwordinput" name="Password" class="form-control" required>
             </div>
+            <h4>Choose Role</h4>
+            @foreach (var role in roles)
+            {
+                <div class="radio">
+                   
+                        @if (@role.RoleName=="Viewer")
+                        {
+                             <label><input type="radio" name="RoleGuid" value="@role.RoleGuid" checked>@role.RoleName </label>
+                        }
+                        else
+                        {
+                             <label><input type="radio" name="RoleGuid" value="@role.RoleGuid">@role.RoleName </label>
+                        }
+                </div>     
+            }
+            <br/>
             <div class="form-group">
                 <label for="save"></label>
                 <button id="save" name="save" class="btn btn-inverse">save</button>
-                <a href="/users">cancel</a>
+                <a href="/">cancel</a>
             </div>
-    </form>
-    <div id="successPanel" class="alert alert-success" style="width:600px">
-        <div id="output1">
-        </div>
-    </div>
-</div>
+            <div id="successPanel" class="alert alert-success" style="width:600px">
+                <div id="output1"></div>
+            </div>
+        </form>    
+

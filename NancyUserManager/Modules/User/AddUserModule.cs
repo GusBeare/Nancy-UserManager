@@ -11,11 +11,19 @@ namespace NancyUserManager.Modules.User
     {
         public AddUserModule()
         {
+            // add an after hook to send the user to access denied if they are NOT admin
+            After += context =>
+            {
+                if (context.Response.StatusCode == HttpStatusCode.Forbidden)
+                    context.Response = this.Response.AsRedirect("/denied");
+            };
+            this.RequiresAnyClaim(new[] { "admin" });
+
             // show the add user form
             Get["/adduser"] = _ =>
             {
                 this.RequiresAuthentication();
-                return View["AddUser"];
+                return View["Views/User/AddUser"];
             };
 
             // receive the posted add form data 

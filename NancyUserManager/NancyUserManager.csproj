@@ -159,13 +159,10 @@
     <Compile Include="UserDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Login.cshtml" />
+    <Content Include="Views\User\Login.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\Home.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\Secure.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config">
@@ -176,26 +173,28 @@
     <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\AddUser.cshtml" />
+    <Content Include="Views\User\AddUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Culture.cshtml" />
+    <Content Include="Views\User\Users.cshtml" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\Users.cshtml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Content Include="Views\DeleteUser.cshtml" />
+    <Content Include="Views\User\DeleteUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Views\EditUser.cshtml" />
+    <Content Include="Views\User\EditUser.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Properties\PublishProfiles\Beare Accounts.pubxml" />
     <None Include="Properties\PublishProfiles\NancyUserManager.pubxml" />
+    <Content Include="Views\AccessDenied.cshtml" />
+    <Content Include="Views\Partials\_AdminMenu.cshtml" />
+    <Content Include="Views\Partials\_EditorMenu.cshtml" />
+    <Content Include="Views\Partials\_PublicMenu.cshtml" />
+    <Content Include="Views\Partials\_ViewerMenu.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

@@ -1,4 +1,5 @@
-﻿@using Nancy.Security
+﻿@using System.Linq
+@using Nancy.Security
 
 <!DOCTYPE html>
 <html>
@@ -12,7 +13,7 @@
 
 <body>
 <div class="container-fluid">
-<h4>Nancy Test User Manager</h4>
+<h4>Nancy Demo User Manager</h4>
    
     <div class="row">
         <div class="col-sm-7 col-md-9 col-lg-9">
@@ -32,13 +33,32 @@
         </div>
         </div>
 <div class="row">
-<div class="col-sm-2 col-md-2 col-lg-2">
-    <ul>
-        <li><a href="/">Home</a></li>
-        <li><a href="/AddUser">Add User</a></li>
-        <li><a href="/Users">Manage Users</a></li>
-    </ul>
-</div>
+    <div class="col-sm-2 col-md-2 col-lg-2">
+         @if (@Html.RenderContext.Context.CurrentUser.IsAuthenticated())
+         {
+            if (@Html.RenderContext.Context.CurrentUser.Claims.Contains("Admin"))
+            {
+                @Html.Partial("Views/Partials/_AdminMenu")
+            }
+            else if (@Html.RenderContext.Context.CurrentUser.Claims.Contains("Editor"))
+            {
+                @Html.Partial("Views/Partials/_EditorMenu")
+            }
+             else if (@Html.RenderContext.Context.CurrentUser.Claims.Contains("Viewer"))
+            {
+                @Html.Partial("Views/Partials/_ViewerMenu")
+            }
+             else
+             {
+                @Html.Partial("Views/Partials/_PublicMenu")
+             }
+         }
+         else
+         {
+             @Html.Partial("Views/Partials/_PublicMenu")
+         }
+        
+    </div>
     <div class="col-sm-10 col-md-10 col-lg-10">
         <p>@RenderBody()</p>    
     </div>

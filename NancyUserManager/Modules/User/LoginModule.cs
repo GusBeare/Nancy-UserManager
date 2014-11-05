@@ -15,7 +15,7 @@ namespace NancyUserManager.Modules.User
                 dynamic model = new ExpandoObject();
                 model.Errored = Request.Query.error.HasValue;
 
-                return View["login", model];
+                return View["Views/User/Login", model];
             };
 
             Post["/login"] = _ =>
