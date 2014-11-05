@@ -42,9 +42,10 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-bin/
-obj/
-debug/
+NancyUserManager/bin/
+NancyUserManager/obj/
+NancyUserManager/debug/
+packages/
 *.suo
 NancyUserManager/bin/NancyUserManager.dll
 NancyUserManager/bin/NancyUserManager.pdb
