@@ -39,6 +39,13 @@ namespace NancyUserManager
             return uRow;
         }
 
+        public static UserRoleGuid GetRoleGuidForUser(Guid identifier)
+        {
+            var db = Database.Open();
+            UserRoleGuid rGuid = db.UserRoles.FindAllByUserGuid(identifier).FirstOrDefault();
+            return rGuid;
+        }
+
         public static IEnumerable<Users> GetAllUsers()
         {
             // simple data used to get all the users and ordered by create date

@@ -13,6 +13,7 @@ namespace NancyUserManager.Models
         public DateTime LastUpdated { get; set; }
         public string LastUpdatedBy { get; set; }
         public Guid RoleGuid { get; set; }
+        public string RoleName { get; set; }
     }
 
     // we need a subset of user for the edit form so that we can just pass the fields we want to update to simple.data
@@ -38,6 +39,12 @@ namespace NancyUserManager.Models
     {
         public string RoleName { get; set; }
     }
+
+    public class UserRoleGuid
+    {
+        public Guid RoleGuid { get; set; }
+    }
+
     public class UserRolesInsert
     {
         public Guid UserGuid { get; set; }

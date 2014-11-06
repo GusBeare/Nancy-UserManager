@@ -18,13 +18,12 @@
                 <td>@u.FirstName</td>
                 <td>@u.LastName</td>
                 <td>@u.CreateDate</td>
-                <td><a href="/EditUser/@u.Guid"><span class="glyphicon glyphicon-edit"> Edit</span></a></td>
-                <td><a href="#"> <span class="glyphicon glyphicon-user"> Roles</span></a></td>
-               
+                <td><a href="/EditUser/@u.Guid"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
+                <td><a href="/EditUserRole/@u.Guid"> <span class="glyphicon glyphicon-user"></span> Change Role</a></td>
                 @if (u.Email.Trim() == "admin@admin.com")
                  {<td></td>}
                 else
-                {<td><a href="/DeleteUser/@u.Guid"><span class="glyphicon glyphicon-trash"> Delete</span></a></td>}
+                {<td><a href="/DeleteUser/@u.Guid"><span class="glyphicon glyphicon-trash"></span> Delete</a></td>}
             </tr>
         }
     </tbody>

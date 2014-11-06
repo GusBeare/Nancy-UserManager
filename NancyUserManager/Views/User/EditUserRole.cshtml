@@ -1,0 +1,86 @@
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase<NancyUserManager.Models.Users>
+
+@{
+    Layout = "Shared/_Layout.cshtml";
+    ViewBag.Title = "Edit User Role";
+
+    var roles = NancyUserManager.UserDatabase.GetRoles();
+    
+}
+<script src="http://malsup.github.com/jquery.form.js"></script> 
+<link rel="stylesheet" href="/Content/myStyles.css" />
+<script>
+    $(document).ready(function () {
+        var options = {
+            target: '#output1',   // target element(s) to be updated with server response 
+            success: window.showResponse,  // post-submit callback 
+            url: '/EditUserRole/@Model.Guid',         // override for form's 'action' attribute 
+            type: 'post',        // 'get' or 'post', override for form's 'method' attribute 
+            dataType: null,        // 'xml', 'script', or 'json' (expected server response type) 
+            clearForm: false,        // clear all form fields after successful submit 
+            resetForm: false        // reset the form after successful submit 
+        };
+
+        // bind form using 'ajaxForm' 
+        $('#userForm').ajaxForm(options);
+        // hide the success panel
+        $('#successPanel').hide();
+    });
+    function showResponse() {
+
+        // hide buttons and show panel
+        $("#formbuttons").remove();
+        $('#successPanel').show();
+        // disable the radio buttons
+        $('input[name=RoleGuid]').attr("disabled", true);
+    }
+</script> 
+ 
+
+<form class="form-horizontal form-small" role="form" id="userForm" action="/EditUserRole/@Model.Guid" method="POST">
+    <fieldset>
+        <legend>edit user role?</legend>
+        <div class="form-group">
+            <label for="Email">Email</label>
+            <input type="text" id="Email" name="Email" class="form-control" value="@Model.Email.Trim()" disabled>
+        </div>
+       
+        <div class="form-group">
+            <label for="FirstNameinput">First Name</label>
+            <input type="text" id="FirstNameinput" name="FirstName" class="form-control" value="@Model.FirstName.Trim()" disabled>
+        </div>
+
+        <div class="form-group">
+            <label for="LastNameinput">Last Name</label>
+            <input type="text" id="LastNameinput" name="LastName" class="form-control" value="@Model.LastName.Trim()" disabled>
+        </div>
+        
+        <div class="form-group">
+        <h4>Choose Role</h4>
+            @foreach (var role in roles)
+            {
+                <div class="radio">
+
+                        @if (@role.RoleGuid == @Model.RoleGuid)
+                        {
+                             <label><input type="radio" name="RoleGuid" value="@role.RoleGuid" checked>@role.RoleName </label>
+                        }
+                        else
+                        {
+                             <label><input type="radio" name="RoleGuid" value="@role.RoleGuid">@role.RoleName </label>
+                        }
+                </div>     
+            }
+        </div>
+            
+        <div class="form-group" id="formbuttons">
+            <button id="btnEdit" name="save" class="btn btn-warning">update</button>
+            <a href="/users">cancel</a>
+
+        </div>
+    </fieldset>
+</form>
+<div id="successPanel" class="alert alert-success" style="width:600px">
+    <div id="output1">
+    </div>
+</div>

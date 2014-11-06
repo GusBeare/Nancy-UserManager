@@ -154,6 +154,7 @@
     <Compile Include="Modules\User\AddUserModule.cs" />
     <Compile Include="Modules\User\DeleteUserModule.cs" />
     <Compile Include="Modules\User\EditUserModule.cs" />
+    <Compile Include="Modules\User\EditUserRoleModule.cs" />
     <Compile Include="Modules\User\ListUsersModule.cs" />
     <Compile Include="Modules\User\LoginModule.cs" />
     <Compile Include="UserDatabase.cs" />
@@ -195,6 +196,7 @@
     <Content Include="Views\Partials\_EditorMenu.cshtml" />
     <Content Include="Views\Partials\_PublicMenu.cshtml" />
     <Content Include="Views\Partials\_ViewerMenu.cshtml" />
+    <Content Include="Views\User\EditUserRole.cshtml" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
