@@ -40,7 +40,7 @@ You can log one of with the following credentials.
 
 **viewer@viewer.com/viewer**
 
-**editor@editor.com/viewer**
+**editor@editor.com/editor**
 
 The script contains SQL to create all the membership tables, roles and users. To add/edit/delete users log is as *admin@admin.com*.
 
