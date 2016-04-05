@@ -9,6 +9,8 @@ namespace NancyUserManager
 
     public class FormsAuthBootstrapper : DefaultNancyBootstrapper
     {
+        public CryptographyConfiguration cryptographyConfiguration;
+
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {
             // We don't call "base" here to prevent auto-discovery of
@@ -25,6 +27,15 @@ namespace NancyUserManager
             container.Register<IUserMapper, UserDatabase>();
         }
 
+        protected override void ApplicationStartup(TinyIoCContainer container, IPipelines pipelines)
+        {
+            // create the cryptography config
+            cryptographyConfiguration = new CryptographyConfiguration(
+                       new RijndaelEncryptionProvider(new PassphraseKeyGenerator("SuperSecretPass", new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 })),
+                       new DefaultHmacProvider(new PassphraseKeyGenerator("UberSuperSecure", new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 })));
+
+        }
+
         protected override void RequestStartup(TinyIoCContainer requestContainer, IPipelines pipelines, NancyContext context)
         {
             // At request startup we modify the request pipelines to
@@ -33,11 +44,6 @@ namespace NancyUserManager
             //
             // The pipelines passed in here are specific to this request,
             // so we can add/remove/update items in them as we please.
-
-            // create a custom cryptography config
-            var cryptographyConfiguration = new CryptographyConfiguration(
-            new RijndaelEncryptionProvider(new PassphraseKeyGenerator("SuperSecretPass", new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 })),
-            new DefaultHmacProvider(new PassphraseKeyGenerator("UberSuperSecure", new byte[] { 1, 2, 3, 4, 5, 6, 7, 8 })));
 
             var formsAuthConfiguration =
                 new FormsAuthenticationConfiguration
