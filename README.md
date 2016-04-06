@@ -20,7 +20,7 @@ I became fed up with struggling to customise and work with other membership prov
 I created a simple *users* table where passwords are hashed using [Bcrypt.Net](http://bcrypt.codeplex.com/ "Bcrypt.Net").
 Passwords are not stored and cannot be retrieved. Verification works by comparing the password with the hash with Brypt.Net.
 
-It's a Visual Studio 2012 project using:
+It's a Visual Studio 2015 project using:
 
 - Nancy, 
 - Razor, 
