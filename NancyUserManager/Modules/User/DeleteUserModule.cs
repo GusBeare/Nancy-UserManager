@@ -12,7 +12,7 @@ namespace NancyUserManager.Modules.User
             After += context =>
             {
                 if (context.Response.StatusCode == HttpStatusCode.Forbidden)
-                    context.Response = this.Response.AsRedirect("/denied");
+                    context.Response = Response.AsRedirect("/denied");
             };
             this.RequiresAnyClaim(new[] { "admin" });
 

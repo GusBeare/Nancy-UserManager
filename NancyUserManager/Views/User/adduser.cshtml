@@ -28,12 +28,12 @@
     function validate() {
     }
     // post-submit callback 
-    function showResponse(responseText, statusText) {
+    function showResponse(responseText) {
 
         // if there is an error in the string then switch to bootrap error style
         var strE = "Error";
         var index = responseText.indexOf(strE);// and get its index.
-        if (index != -1) { // If the index is not -1 then the term was matched in the string,
+        if (index !== -1) { // If the index is not -1 then the term was matched in the string,
             $("#successPanel").removeClass("alert alert-success");
             $("#successPanel").addClass("alert alert-danger");
         } else {

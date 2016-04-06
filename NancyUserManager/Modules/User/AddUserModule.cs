@@ -45,9 +45,9 @@ namespace NancyUserManager.Modules.User
                 var pwd = (string)Request.Form.Password;
 
                 // create the BCrypt hash + salt
-                string theSalt = BCrypt.Net.BCrypt.GenerateSalt();
+                var theSalt = BCrypt.Net.BCrypt.GenerateSalt();
                 // GenerateSalt(50); increase the value in there to increase work factor
-                string theHash = BCrypt.Net.BCrypt.HashPassword(pwd, theSalt);
+                var theHash = BCrypt.Net.BCrypt.HashPassword(pwd, theSalt);
                 // nb: pwd is NOT saved in the DB, only the hash
 
                 model.CreateDate = DateTime.Now;
