@@ -25,6 +25,7 @@
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
     <TargetFrameworkProfile />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -132,6 +133,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\myStyles.css" />
+    <Content Include="Scripts\MembershipDB.sql" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
     </Content>
