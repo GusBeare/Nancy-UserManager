@@ -136,6 +136,7 @@
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include=".gitignore" />
     <Content Include="Content\myStyles.css" />
     <Content Include="Scripts\MembershipDB.sql" />
     <Content Include="Web.config">
