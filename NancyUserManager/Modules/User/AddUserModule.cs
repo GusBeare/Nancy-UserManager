@@ -45,8 +45,10 @@ namespace NancyUserManager.Modules.User
                 var pwd = (string)Request.Form.Password;
 
                 // create the BCrypt hash + salt
-                var theSalt = BCrypt.Net.BCrypt.GenerateSalt();
-                // GenerateSalt(50); increase the value in there to increase work factor
+                // use default, increase WORK FACTOR to make more secure. Note that this will slow down user create a great deal and 
+                // you will want to put some kind of AJAX processing gif on the page 
+                var theSalt = BCrypt.Net.BCrypt.GenerateSalt(); 
+
                 var theHash = BCrypt.Net.BCrypt.HashPassword(pwd, theSalt);
                 // nb: pwd is NOT saved in the DB, only the hash
 
@@ -57,6 +59,14 @@ namespace NancyUserManager.Modules.User
                 model.Guid = Guid.NewGuid();
 
                 db.Users.Insert(model);
+
+                // Create a UserRole row and insert that
+                var UserRoles = new UserRolesInsert();
+                UserRoles.RoleGuid = model.RoleGuid;
+                UserRoles.UserGuid = model.Guid;
+
+                db.UserRoles.Insert(UserRoles);
+
                 return Response.AsJson("<strong>Success:</strong> user <em>" + model.Email + "</em> was added.");
             };
 

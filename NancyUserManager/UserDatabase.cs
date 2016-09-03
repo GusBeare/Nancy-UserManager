@@ -50,7 +50,18 @@ namespace NancyUserManager
         {
             // simple data used to get all the users and ordered by create date
             var db = Database.Open();
-            IEnumerable<Users> uRows = db.Open().Users.All().OrderByDescending(db.Users.CreateDate);
+
+            IEnumerable<Users> uRows = db.Users.All()
+              .Select(
+                db.Users.Guid,
+                db.Users.FirstName,
+                db.Users.LastName,
+                db.Users.Email,
+                db.Users.CreateDate,
+                db.Users.UserRoles.RoleGuid,
+                db.Users.UserRoles.Roles.RoleName
+                );
+
             return uRows;
         }
 
@@ -64,8 +75,7 @@ namespace NancyUserManager
             if (u == null) return null;
             var doesPasswordMatch = BCrypt.Net.BCrypt.Verify(password, u.Hash);
 
-            if (doesPasswordMatch) return u.Guid;
-            return null;
+            return doesPasswordMatch ? (Guid?) u.Guid : null;
         }
 
         public static IEnumerable<Roles> GetRoles()
