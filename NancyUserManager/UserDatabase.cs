@@ -8,11 +8,30 @@ using System.Collections.Generic;
 
 namespace NancyUserManager
 {
+  
     public class UserDatabase : IUserMapper
     {
+        public static bool UpdateLoginDetails(bool passwordInvalid, Guid guid, string IPAddress)
+        {
+            var db = Database.Open();
+
+            if (passwordInvalid)
+            {
+                db.Users.UpdateByGuid(Guid: guid, LastSuccessfulLoginIPAddress: IPAddress);
+            }
+            else
+            {
+                db.Users.UpdateByGuid(Guid: guid, LastFailedLoginIPAddress: IPAddress);
+            }
+           
+            return true;
+        }
+
+       
+      
+
         public static string DeleteUser(Guid identifier)
         {
-            // use Simple.Data to delete the user and their roles
             var db = Database.Open();
             var uRow = db.Users.FindByGuid(identifier);
             if (uRow == null) return null;
@@ -51,6 +70,7 @@ namespace NancyUserManager
             // simple data used to get all the users and ordered by create date
             var db = Database.Open();
 
+            // here we join in the UserRoles and Roles tables to get the users RoleName.
             IEnumerable<Users> uRows = db.Users.All()
               .Select(
                 db.Users.Guid,
@@ -67,15 +87,29 @@ namespace NancyUserManager
 
 
         // validate user from DB
-        public static Guid? ValidateUser(string email, string password)
+        public static Guid? ValidateUser(string email, string password, string IPAddress)
         {
             // get the user row details from DB
             var u = GetUserByEmail(email);
 
-            if (u == null) return null;
-            var doesPasswordMatch = BCrypt.Net.BCrypt.Verify(password, u.Hash);
+            // outcomes: 
+            //  1> row is found, user exists => 1a pwd matches 1b pwd fails  
+            //  2> row is not found user does not exist
 
-            return doesPasswordMatch ? (Guid?) u.Guid : null;
+            if (u != null)
+            {
+                // check if the pwd is correct
+                var doesPasswordMatch = BCrypt.Net.BCrypt.Verify(password, u.Hash);
+
+                // update the users IP address
+                UpdateLoginDetails(doesPasswordMatch, u.Guid, IPAddress);
+
+                return doesPasswordMatch ? (Guid?) u.Guid : null;
+            }
+            else
+            {
+                return null;
+            }
         }
 
         public static IEnumerable<Roles> GetRoles()

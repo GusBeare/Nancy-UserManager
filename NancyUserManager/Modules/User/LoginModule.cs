@@ -20,13 +20,13 @@ namespace NancyUserManager.Modules.User
 
             Post["/login"] = _ =>
             {
-                var userGuid = UserDatabase.ValidateUser((string) Request.Form.Username,
-                    (string) Request.Form.Password);
+                var userGuid = UserDatabase.ValidateUser((string) Request.Form.Username,(string) Request.Form.Password,Request.UserHostAddress.ToString());
 
-                if (userGuid == null)
+                if (!userGuid.HasValue)
                 {
                     return Context.GetRedirect("~/login?error=true&username=" + (string) Request.Form.Username);
                 }
+              
 
                 DateTime? expiry = null;
                 if (Request.Form.RememberMe.HasValue)

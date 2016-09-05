@@ -52,11 +52,11 @@ namespace NancyUserManager.Modules.User
                 var theHash = BCrypt.Net.BCrypt.HashPassword(pwd, theSalt);
                 // nb: pwd is NOT saved in the DB, only the hash
 
-                model.CreateDate = DateTime.Now;
+                model.Guid = Guid.NewGuid();
+                model.CreatedDate = DateTime.Now;
                 model.LastUpdated = DateTime.Now;
                 model.LastUpdatedBy = Context.CurrentUser.UserName;
                 model.Hash = theHash;
-                model.Guid = Guid.NewGuid();
 
                 db.Users.Insert(model);
 

@@ -9,7 +9,13 @@ namespace NancyUserManager.Models
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string Hash { get; set; }
-        public DateTime CreateDate { get; set; }
+        public int FailedLogins { get; set; }
+        public DateTime LastFailedLoginDate { get; set; }
+        public string LastFailedLoginIPAddress { get; set; }
+        public DateTime LastSuccessfulLoginDate { get; set; }
+        public string LastLoginSuccessfulIPAddress { get; set; }
+
+        public DateTime CreatedDate { get; set; }
         public DateTime LastUpdated { get; set; }
         public string LastUpdatedBy { get; set; }
         public Guid RoleGuid { get; set; }

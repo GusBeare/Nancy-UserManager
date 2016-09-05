@@ -19,7 +19,12 @@ CREATE TABLE [dbo].[Users](
 	[FirstName] [nchar](50) NOT NULL,
 	[LastName] [nchar](50) NOT NULL,
 	[Hash] [char](60) NOT NULL,
-	[CreateDate] [datetime] NOT NULL,
+	[FailedLogins][int] NULL,
+	[LastFailedLoginDate] [datetime2] NULL,
+	[LastFailedLoginIPAddress][varcahr(50)] NULL,
+	[LastSuccessfulLoginDate] [datetime2] NULL,
+	[LastSuccessfulLoginIPAddress][varcahr(50)] NULL,
+	[CreatedDate] [datetime] NOT NULL,
 	[LastUpdated] [datetime] NOT NULL,
 	[LastUpdatedBy] [nchar](50) NOT NULL,
  CONSTRAINT [PK_Users] PRIMARY KEY CLUSTERED 
