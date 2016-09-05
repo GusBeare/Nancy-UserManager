@@ -20,7 +20,9 @@ namespace NancyUserManager.Modules.User
 
             Post["/login"] = _ =>
             {
-                var userGuid = UserDatabase.ValidateUser((string) Request.Form.Username,(string) Request.Form.Password,Request.UserHostAddress.ToString());
+                var UserIPAddr = Context.Request.UserHostAddress;
+
+                var userGuid = UserDatabase.ValidateUser((string) Request.Form.Username, (string) Request.Form.Password, UserIPAddr);
 
                 if (!userGuid.HasValue)
                 {

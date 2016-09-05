@@ -21,9 +21,9 @@ CREATE TABLE [dbo].[Users](
 	[Hash] [char](60) NOT NULL,
 	[FailedLogins][int] NULL,
 	[LastFailedLoginDate] [datetime2] NULL,
-	[LastFailedLoginIPAddress][varcahr(50)] NULL,
+	[LastFailedLoginIPAddress][VARCHAR](50) NULL,
 	[LastSuccessfulLoginDate] [datetime2] NULL,
-	[LastSuccessfulLoginIPAddress][varcahr(50)] NULL,
+	[LastSuccessfulLoginIPAddress][VARCHAR](50) NULL,
 	[CreatedDate] [datetime] NOT NULL,
 	[LastUpdated] [datetime] NOT NULL,
 	[LastUpdatedBy] [nchar](50) NOT NULL,
@@ -39,15 +39,15 @@ SET ANSI_PADDING OFF
 GO
 
 -- create admin user
-insert into users (Guid,Email,FirstName,LastName,Hash,CreateDate,Lastupdated,LastUpdatedBy)
+insert into users (Guid,Email,FirstName,LastName,Hash,CreatedDate,Lastupdated,LastUpdatedBy)
 values('4F63519E-C271-41C4-BE97-9BEEC98F3B1E','admin@admin.com','admin','user','$2a$10$/ZXTwmPLKqaw5ac5imwVb.WdaXArXZDS8sfhW0x0GJPbJQjZMWGq.',Getdate(),getdate(),'admin@admin.com')
 
 -- create viewer user
-insert into users (Guid,Email,FirstName,LastName,Hash,CreateDate,Lastupdated,LastUpdatedBy)
+insert into users (Guid,Email,FirstName,LastName,Hash,CreatedDate,Lastupdated,LastUpdatedBy)
 values('B049F476-9AF5-467E-84BC-3CDAF3A542E1','viewer@viewer.com','viewer','user','$2a$10$Tnz6ywr1zZXpyT.WZGOr0uzfO/EQ0gLnnMhO0653WKXPqBqQ7OjUK',Getdate(),getdate(),'admin@admin.com')
 
 -- create editor user
-insert into users (Guid,Email,FirstName,LastName,Hash,CreateDate,Lastupdated,LastUpdatedBy)
+insert into users (Guid,Email,FirstName,LastName,Hash,CreatedDate,Lastupdated,LastUpdatedBy)
 values('D9CC9DEE-FF51-42F2-A5BE-331902D6F54C','editor@editor.com','editor','user','$2a$10$lsd/H0ESP3EP9c7d75Z.S.mo74oHHYZuoY1el1OI3RehatAuNL0aO',Getdate(),getdate(),'admin@admin.com')
 
 

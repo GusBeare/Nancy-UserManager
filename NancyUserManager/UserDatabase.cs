@@ -11,17 +11,19 @@ namespace NancyUserManager
   
     public class UserDatabase : IUserMapper
     {
-        public static bool UpdateLoginDetails(bool passwordInvalid, Guid guid, string IPAddress)
+        public static bool UpdateLoginDetails(bool passwordValid, Guid guid, string IPAddress)
         {
             var db = Database.Open();
 
-            if (passwordInvalid)
+            DateTime dt = DateTime.Now;
+
+            if (passwordValid)
             {
-                db.Users.UpdateByGuid(Guid: guid, LastSuccessfulLoginIPAddress: IPAddress);
+                db.Users.UpdateByGuid(Guid: guid, LastSuccessfulLoginIPAddress: IPAddress, LastFailedLoginDate: dt);
             }
             else
             {
-                db.Users.UpdateByGuid(Guid: guid, LastFailedLoginIPAddress: IPAddress);
+                db.Users.UpdateByGuid(Guid: guid, LastFailedLoginIPAddress: IPAddress, LastSuccessfulLoginDate: dt);
             }
            
             return true;
@@ -77,7 +79,7 @@ namespace NancyUserManager
                 db.Users.FirstName,
                 db.Users.LastName,
                 db.Users.Email,
-                db.Users.CreateDate,
+                db.Users.CreatedDate,
                 db.Users.UserRoles.RoleGuid,
                 db.Users.UserRoles.Roles.RoleName
                 );
