@@ -40,7 +40,6 @@ namespace NancyUserManager.Modules.User
                     return Context.GetRedirect("~/login?error=true&username=" + uname);
                 }
 
-
                 DateTime? expiry = null;
                 if (Request.Form.RememberMe.HasValue)
                 {
