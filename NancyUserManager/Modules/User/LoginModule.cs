@@ -3,6 +3,7 @@ using Nancy.Authentication.Forms;
 using Nancy.Extensions;
 using System;
 using System.Dynamic;
+using System.Web.Configuration;
 
 namespace NancyUserManager.Modules.User
 {
@@ -18,17 +19,27 @@ namespace NancyUserManager.Modules.User
                 return View["Views/User/Login", model];
             };
 
-            Post["/login"] = _ =>
+            Post["/login"] = p =>
             {
                 var UserIPAddr = Context.Request.UserHostAddress;
+                var uname = (string)Request.Form.Username;
+                var pwd = (string)Request.Form.Password;
 
-                var userGuid = UserDatabase.ValidateUser((string) Request.Form.Username, (string) Request.Form.Password, UserIPAddr);
+                var AllowedFailedLogins = Convert.ToInt32(WebConfigurationManager.AppSettings["NumberOfLoginAttempts"]);
+                var LockoutDurationMins = Convert.ToInt32(WebConfigurationManager.AppSettings["LockoutDurationMins"]);
+
+                var lockedYn = UserDatabase.IsAccountLocked(uname, AllowedFailedLogins,LockoutDurationMins);
+
+                if (lockedYn)
+                    return Context.GetRedirect("~/login?error=true&username=" + uname);
+
+                var userGuid = UserDatabase.ValidateUser(uname, pwd, UserIPAddr, AllowedFailedLogins, LockoutDurationMins);
 
                 if (!userGuid.HasValue)
                 {
-                    return Context.GetRedirect("~/login?error=true&username=" + (string) Request.Form.Username);
+                    return Context.GetRedirect("~/login?error=true&username=" + uname);
                 }
-              
+
 
                 DateTime? expiry = null;
                 if (Request.Form.RememberMe.HasValue)

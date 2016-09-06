@@ -11,27 +11,66 @@ namespace NancyUserManager
   
     public class UserDatabase : IUserMapper
     {
-        public static bool UpdateLoginDetails(bool passwordValid, Guid guid, string IPAddress)
+
+        public static bool IsAccountLocked(string email, int NumberOfAllowedFailedLogins, int LockoutDurationMins)
+        {
+          
+            var db = Database.Open();
+            var user = db.Users.FindByEmail(email);
+            var dtLastFailure = user?.LastFailedLoginDate?.ToString();
+
+            // if there is no lockout timestamp then the account is not locked
+            if (dtLastFailure == null) return false;
+
+            var start = DateTime.Now;
+            var oldDate = DateTime.Parse(dtLastFailure);
+
+            bool Passed = start.Subtract(oldDate) >= TimeSpan.FromMinutes(LockoutDurationMins);
+
+            return user.FailedLogins > NumberOfAllowedFailedLogins && !Passed;
+        }
+
+
+        public static void UpdateLoginDetails(bool passwordValid, Guid guid, string IPAddress, int NumberOfFailedLogins, int LockoutDurationMins)
         {
             var db = Database.Open();
+            var dt = DateTime.Now;
+            var user = db.Users.FindByGuid(guid);
 
-            DateTime dt = DateTime.Now;
+            var nLoginAttempts = user.FailedLogins;
+            var dtLastFailure = user.LastFailedLoginDate;
+
+            // three login failures 
+            if (nLoginAttempts >= NumberOfFailedLogins)
+            {
+                // check if the timespan has elapsed
+                var start = DateTime.Now;
+                var lastfail = DateTime.Parse(dtLastFailure.ToString());
+
+                if (start.Subtract(lastfail) >= TimeSpan.FromMinutes(LockoutDurationMins))
+                {
+                    // reset the counter
+                    db.Users.UpdateByGuid(Guid: guid, FailedLogins: 0, LastFailedLoginIPAddress: IPAddress);
+                    return;
+                }
+               
+            }
 
             if (passwordValid)
             {
-                db.Users.UpdateByGuid(Guid: guid, LastSuccessfulLoginIPAddress: IPAddress, LastFailedLoginDate: dt);
+                db.Users.UpdateByGuid(Guid: guid, LastSuccessfulLoginIPAddress: IPAddress, LastSuccessfulLoginDate: dt);
             }
             else
             {
-                db.Users.UpdateByGuid(Guid: guid, LastFailedLoginIPAddress: IPAddress, LastSuccessfulLoginDate: dt);
-            }
+              
+                // we increment the failed logins count here
+                db.Users.UpdateByGuid(Guid: guid, FailedLogins: db.Users.FailedLogins + 1, LastFailedLoginIPAddress: IPAddress, LastFailedLoginDate: dt);
+             }
+
            
-            return true;
         }
 
-       
       
-
         public static string DeleteUser(Guid identifier)
         {
             var db = Database.Open();
@@ -89,22 +128,16 @@ namespace NancyUserManager
 
 
         // validate user from DB
-        public static Guid? ValidateUser(string email, string password, string IPAddress)
+        public static Guid? ValidateUser(string email, string password, string IPAddress, int AllowedLoginTries, int LockoutDurationMins)
         {
             // get the user row details from DB
             var u = GetUserByEmail(email);
 
-            // outcomes: 
-            //  1> row is found, user exists => 1a pwd matches 1b pwd fails  
-            //  2> row is not found user does not exist
-
             if (u != null)
             {
-                // check if the pwd is correct
                 var doesPasswordMatch = BCrypt.Net.BCrypt.Verify(password, u.Hash);
 
-                // update the users IP address
-                UpdateLoginDetails(doesPasswordMatch, u.Guid, IPAddress);
+                UpdateLoginDetails(doesPasswordMatch, u.Guid, IPAddress, AllowedLoginTries, LockoutDurationMins); 
 
                 return doesPasswordMatch ? (Guid?) u.Guid : null;
             }

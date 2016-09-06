@@ -21,10 +21,8 @@
                 <input type="checkbox" value="true"> Remember me?
             </label>
         </div>
-        <div class="control-group">
-            <div class="controls">
-                <button id="login" name="login" class="btn btn-inverse">login</button>
-            </div>
+        <div class="form-group">
+                <button id="login" name="login" class="btn btn-default">login</button>
         </div>
 
     </fieldset>
@@ -32,7 +30,12 @@
 
 
 <div>
-     @if (Model.Errored) {
-        <div id="errorBox" class="floatingError">Invalid Username or Password</div>
+    <hr/>
+
+    @if (Model.Errored)
+    {
+        <div id="errorBox" class="alert alert-info">Invalid Username or Password. <br/>
+            If repeated login attempts fail your account may be locked. Try waiting for ten minutes
+        </div>
     }
 </div>

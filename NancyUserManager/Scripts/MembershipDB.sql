@@ -19,7 +19,7 @@ CREATE TABLE [dbo].[Users](
 	[FirstName] [nchar](50) NOT NULL,
 	[LastName] [nchar](50) NOT NULL,
 	[Hash] [char](60) NOT NULL,
-	[FailedLogins][int] NULL,
+	[FailedLogins][int] DEFAULT 0,
 	[LastFailedLoginDate] [datetime2] NULL,
 	[LastFailedLoginIPAddress][VARCHAR](50) NULL,
 	[LastSuccessfulLoginDate] [datetime2] NULL,

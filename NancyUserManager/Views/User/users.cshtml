@@ -9,7 +9,7 @@
 <h4>Users</h4>
 <table class="table table-condensed table-hover">
     <thead><tr>
-               <th>User Name</th><th>First</th><th>Last</th><th>Created</th><th></th><th></th><th></th></tr>
+        <th>User Name</th><th>First</th><th>Last</th><th>Role</th><th>Created</th><th></th><th></th><th></th></tr>
     </thead>
     <tbody>
         
@@ -19,6 +19,7 @@
                 <td>@u.Email</td>
                 <td>@u.FirstName</td>
                 <td>@u.LastName</td>
+                <td>@u.RoleName</td>
                 <td>@u.CreatedDate</td>
                 <td><a href="/EditUser/@u.Guid"><span class="glyphicon glyphicon-edit"></span> Edit</a></td>
                 
