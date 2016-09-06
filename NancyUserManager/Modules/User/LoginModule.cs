@@ -9,6 +9,8 @@ namespace NancyUserManager.Modules.User
 {
     public class LoginModule : NancyModule
     {
+       
+
         public LoginModule() : base("/")
         {
             Get["/login"] = _ =>

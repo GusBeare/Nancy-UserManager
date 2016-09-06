@@ -1,4 +1,5 @@
-﻿@using System.Linq
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+@using System.Linq
 @using Nancy.Security
 
 <!DOCTYPE html>
@@ -20,7 +21,7 @@
         </div>
         <div class="col-sm-5 col-md-3 col-lg-3">
             <div class="">
-                @if (@Html.RenderContext.Context.CurrentUser.IsAuthenticated())
+                @if (Html.RenderContext.Context.CurrentUser.IsAuthenticated())
                 {
                     <p><small><span style="padding-right:15px"><em>@Html.RenderContext.Context.CurrentUser.UserName</em></span>
                         <a href="@Url.Content("~/logout")">Logout</a></small></p>
@@ -34,17 +35,17 @@
         </div>
 <div class="row">
     <div class="col-sm-2 col-md-2 col-lg-2">
-         @if (@Html.RenderContext.Context.CurrentUser.IsAuthenticated())
+         @if (Html.RenderContext.Context.CurrentUser.IsAuthenticated())
          {
-            if (@Html.RenderContext.Context.CurrentUser.Claims.Contains("Admin"))
+            if (Html.RenderContext.Context.CurrentUser.Claims.Contains("Admin"))
             {
                 @Html.Partial("Views/Partials/_AdminMenu")
             }
-            else if (@Html.RenderContext.Context.CurrentUser.Claims.Contains("Editor"))
+            else if (Html.RenderContext.Context.CurrentUser.Claims.Contains("Editor"))
             {
                 @Html.Partial("Views/Partials/_EditorMenu")
             }
-             else if (@Html.RenderContext.Context.CurrentUser.Claims.Contains("Viewer"))
+             else if (Html.RenderContext.Context.CurrentUser.Claims.Contains("Viewer"))
             {
                 @Html.Partial("Views/Partials/_ViewerMenu")
             }

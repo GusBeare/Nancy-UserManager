@@ -1,4 +1,6 @@
-﻿@{
+﻿@inherits Nancy.ViewEngines.Razor.NancyRazorViewBase
+
+@{
     Layout = "Shared/_Layout.cshtml";
     ViewBag.Title = "Add a New User";
 
@@ -74,7 +76,7 @@
             {
                 <div class="radio">
                    
-                        @if (@role.RoleName=="Viewer")
+                        @if (role.RoleName=="Viewer")
                         {
                              <label><input type="radio" name="RoleGuid" value="@role.RoleGuid" checked>@role.RoleName </label>
                         }
