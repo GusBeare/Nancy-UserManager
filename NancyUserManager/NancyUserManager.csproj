@@ -151,9 +151,6 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
     <Compile Include="Modules\Home\HomeModule.cs" />
     <Compile Include="DemoUserIdentity.cs" />
     <Compile Include="FormsAuthBootstrapper.cs" />
@@ -165,6 +162,7 @@
     <Compile Include="Modules\User\EditUserRoleModule.cs" />
     <Compile Include="Modules\User\ListUsersModule.cs" />
     <Compile Include="Modules\User\LoginModule.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UserDatabase.cs" />
   </ItemGroup>
   <ItemGroup>
