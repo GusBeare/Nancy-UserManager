@@ -37,26 +37,21 @@ namespace NancyUserManager.Modules.User
                 var db = Database.Open(); // open db with Simple.Data
 
                 // check if username/email already exists
-                int uCount = Database.Open().Users.GetCount(db.Users.Email == Request.Form.Email);
+                int uCount = db.Users.GetCount(db.Users.Email == Request.Form.Email);
                 if (uCount > 0)
                     return Response.AsJson("<strong>Error:</strong> The email already exists and cannot be used!");
 
                 // get the pwd because it is not going in the table and therefore NOT in the model
                 var pwd = (string)Request.Form.Password;
 
-                // create the BCrypt hash + salt
-                // use default, increase WORK FACTOR to make more secure. Note that this will slow down user create a great deal and 
-                // you will want to put some kind of AJAX processing gif on the page 
-                var theSalt = BCrypt.Net.BCrypt.GenerateSalt(); 
-
-                var theHash = BCrypt.Net.BCrypt.HashPassword(pwd, theSalt);
-                // nb: pwd is NOT saved in the DB, only the hash
-
+                // create the BCrypt hash with default work factor
+                var theHash = BCrypt.Net.BCrypt.HashPassword(pwd);
+              
                 model.Guid = Guid.NewGuid();
                 model.CreatedDate = DateTime.Now;
                 model.LastUpdated = DateTime.Now;
                 model.LastUpdatedBy = Context.CurrentUser.UserName;
-                model.Hash = theHash;
+                model.Hash = theHash;  // pwd is NOT saved in the DB, only the hash
 
                 db.Users.Insert(model);
 
