@@ -25,13 +25,15 @@ namespace BeareAccounts.Modules.User
             // show the edit user form
             Get["/EditUserRole/{Guid}"] = parameters =>
             {
-               
-
-                // get the user row to be edit and send it to the View
-                var userRow = UserDatabase.GetUserByGuid(parameters.Guid);
+                // look up the user role from the Guid
+                // nb. the view model 'Users' contains role guid and role name but the users table does not
+                // so we have to look it up and populate it for the view. For now it's easier than doing a join with
+                // Simple.Data #DEV - review and improve later - can be done with single method
+                Users userRow = UserDatabase.GetUserByGuid(parameters.Guid);
                 
-                // get the users role guid and put into the model
+                // get the users role guid and put into the user view model
                 var urGuid = UserDatabase.GetRoleGuidForUser(parameters.Guid);
+
                 userRow.RoleGuid = urGuid.RoleGuid;
                 
                 return View["Views/User/EditUserRole", userRow];
