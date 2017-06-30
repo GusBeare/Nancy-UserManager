@@ -14,17 +14,15 @@ namespace NancyUserManager.Modules.User
                 if (context.Response.StatusCode == HttpStatusCode.Forbidden)
                     context.Response = Response.AsRedirect("/denied");
             };
-            this.RequiresAnyClaim(new[] { "admin" });
+            this.RequiresAnyClaim("admin");
+            this.RequiresAuthentication();
 
             // show the del user form
             Get["/DeleteUser/{Guid}"] = parameters =>
             {
-                this.RequiresAuthentication();
-
                 // get the user row to be zapped and send it to the View
                 var userRow = UserDatabase.GetUserByGuid(parameters.Guid);
                 return View["Views/User/DeleteUser", userRow];
-
             };
 
             Post["/DeleteUser/{Guid}"] = parameters =>

@@ -17,36 +17,36 @@ namespace NancyUserManager.Modules.User
                 if (context.Response.StatusCode == HttpStatusCode.Forbidden)
                     context.Response = this.Response.AsRedirect("/denied");
             };
-            this.RequiresAnyClaim(new[] { "admin" });
+
+            // user must be authenticated admin user
+            this.RequiresAnyClaim("admin");
+            this.RequiresAuthentication();
 
             // show the add user form
-            Get["/adduser"] = _ =>
-            {
-                this.RequiresAuthentication();
-                return View["Views/User/AddUser"];
-            };
+            Get["/adduser"] = _ => View["Views/User/AddUser"];
 
-            // receive the posted add form data 
-
+            // receive the add form data 
             Post["/adduser"] = parameters =>
             {
-                // create an instance of the expected model and bind it to this (the posted form)
+                // bind users model to the posted form
                 var model = new Users();
                 this.BindTo(model);
 
-                var db = Database.Open(); // open db with Simple.Data
+                // open db with Simple.Data
+                var db = Database.Open(); 
 
                 // check if username/email already exists
                 int uCount = db.Users.GetCount(db.Users.Email == Request.Form.Email);
                 if (uCount > 0)
                     return Response.AsJson("<strong>Error:</strong> The email already exists and cannot be used!");
 
-                // get the pwd because it is not going in the table and therefore NOT in the model
+                // get the pwd from the request data. It is not going in the table and therefore NOT in the model
                 var pwd = (string)Request.Form.Password;
 
-                // create the BCrypt hash with default work factor
+                // create the BCrypt hash with default work factor passing in the new password
                 var theHash = BCrypt.Net.BCrypt.HashPassword(pwd);
               
+                // populate the model fields not captured in the form
                 model.Guid = Guid.NewGuid();
                 model.CreatedDate = DateTime.Now;
                 model.LastUpdated = DateTime.Now;
@@ -55,7 +55,7 @@ namespace NancyUserManager.Modules.User
 
                 db.Users.Insert(model);
 
-                // Create a UserRole row and insert that
+                // Create a UserRole row 
                 var UserRoles = new UserRolesInsert();
                 UserRoles.RoleGuid = model.RoleGuid;
                 UserRoles.UserGuid = model.Guid;

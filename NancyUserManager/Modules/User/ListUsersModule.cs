@@ -13,12 +13,12 @@ namespace NancyUserManager.Modules.User
                 if (context.Response.StatusCode == HttpStatusCode.Forbidden)
                     context.Response = Response.AsRedirect("/denied");
             };
-            this.RequiresAnyClaim(new[] { "admin" });
+
+            this.RequiresAnyClaim("admin");
+            this.RequiresAuthentication();
 
             Get["/users"] = _ =>
             {
-                this.RequiresAuthentication();
-
                 var users = UserDatabase.GetAllUsers();
                 ViewBag.Title = "Application Users";
                 return View["Views/User/Users", users];

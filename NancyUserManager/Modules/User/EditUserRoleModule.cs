@@ -19,12 +19,13 @@ namespace BeareAccounts.Modules.User
                     context.Response = Response.AsRedirect("/denied");
             };
 
-            this.RequiresAnyClaim(new[] { "admin" });
+            this.RequiresAnyClaim("admin");
+            this.RequiresAuthentication();
 
             // show the edit user form
             Get["/EditUserRole/{Guid}"] = parameters =>
             {
-                this.RequiresAuthentication();
+               
 
                 // get the user row to be edit and send it to the View
                 var userRow = UserDatabase.GetUserByGuid(parameters.Guid);
@@ -42,7 +43,7 @@ namespace BeareAccounts.Modules.User
                 this.BindTo(model);
                 var email = (string)Request.Form.Email;
 
-                string r = null;
+                string r;
                 
                 try
                 {

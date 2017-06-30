@@ -18,16 +18,15 @@ namespace NancyUserManager.Modules.User
                     context.Response = Response.AsRedirect("/denied");
             };
             this.RequiresAnyClaim(new[] { "admin" });
+            this.RequiresAuthentication();
+
 
             // show the edit user form
             Get["/EditUser/{Guid}"] = parameters =>
-            {
-                this.RequiresAuthentication();
-
+            {  
                 // get the user row to be edit and send it to the View
                 var userRow = UserDatabase.GetUserByGuid(parameters.Guid);
                 return View["Views/User/EditUser", userRow];
-
             };
 
             Post["/EditUser/{Guid}"] = parameters =>
