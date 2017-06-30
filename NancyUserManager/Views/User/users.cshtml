@@ -28,7 +28,7 @@
                 {
                     if (Html.RenderContext.Context.CurrentUser.Claims.Contains("Admin"))
                     {
-                        if (@u.Email != "admin@admin.com")
+                        if (u.Email != "admin@admin.com")
                         {
                             <td><a href="/EditUserRole/@u.Guid"> <span class="glyphicon glyphicon-user"></span> Change Role</a></td>
                             <td><a href="/DeleteUser/@u.Guid"><span class="glyphicon glyphicon-trash"></span> Delete</a></td>

@@ -7,9 +7,9 @@ namespace NancyUserManager
     using Nancy.Bootstrapper;
     using Nancy.TinyIoc;
 
-    public class FormsAuthBootstrapper : DefaultNancyBootstrapper
+    public class FormsAuthenticationBootstrapper : DefaultNancyBootstrapper
     {
-        public CryptographyConfiguration cryptographyConfiguration;
+        private CryptographyConfiguration cryptographyConfiguration;
 
         protected override void ConfigureApplicationContainer(TinyIoCContainer container)
         {

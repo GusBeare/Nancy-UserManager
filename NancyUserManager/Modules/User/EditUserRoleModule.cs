@@ -1,12 +1,11 @@
-﻿using NancyUserManager;
-using NancyUserManager.Models;
+﻿using NancyUserManager.Models;
 using Nancy;
 using Nancy.ModelBinding;
 using Nancy.Security;
 using Simple.Data;
 using System;
 
-namespace BeareAccounts.Modules.User
+namespace NancyUserManager.Modules.User
 {
     public class EditUserRoleModule : NancyModule
     {
@@ -25,20 +24,10 @@ namespace BeareAccounts.Modules.User
             // show the edit user form
             Get["/EditUserRole/{Guid}"] = parameters =>
             {
-                // look up the user role from the Guid
-                // nb. the view model 'Users' contains role guid and role name but the users table does not
-                // so we have to look it up and populate it for the view. For now it's easier than doing a join with
-                // Simple.Data #DEV - review and improve later - can be done with single method
                 Users userRow = UserDatabase.GetUserByGuid(parameters.Guid);
-                
-                // get the users role guid and put into the user view model
-                var urGuid = UserDatabase.GetRoleGuidForUser(parameters.Guid);
-
-                userRow.RoleGuid = urGuid.RoleGuid;
-                
                 return View["Views/User/EditUserRole", userRow];
-
             };
+
             Post["/EditUserRole/{Guid}"] = parameters =>
             {
                 var model = new Users();

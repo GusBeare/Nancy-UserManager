@@ -13,7 +13,7 @@ namespace NancyUserManager.Models
         public DateTime LastFailedLoginDate { get; set; }
         public string LastFailedLoginIPAddress { get; set; }
         public DateTime LastSuccessfulLoginDate { get; set; }
-        public string LastLoginSuccessfulIPAddress { get; set; }
+        public string LastSuccessfulLoginIPAddress { get; set; }
 
         public DateTime CreatedDate { get; set; }
         public DateTime LastUpdated { get; set; }

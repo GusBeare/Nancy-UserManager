@@ -61,7 +61,7 @@
             {
                 <div class="radio">
 
-                        @if (@role.RoleGuid == @Model.RoleGuid)
+                        @if (role.RoleGuid == Model.RoleGuid)
                         {
                              <label><input type="radio" name="RoleGuid" value="@role.RoleGuid" checked>@role.RoleName </label>
                         }

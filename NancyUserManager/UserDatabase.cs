@@ -93,9 +93,34 @@ namespace NancyUserManager
         }
         public static Users GetUserByGuid(Guid identifier)
         {
-            // use Simple.Data to get the user row
+           
             var db = Database.Open();
-            var uRow = db.Users.FindByGuid(identifier);
+
+            var uRow = (Users) db.Users.All()
+                .Select(
+                    db.Users.Guid,
+                    db.Users.Email,
+                    db.Users.FirstName,
+                    db.Users.lastName,
+                    db.Users.Hash,
+                    db.Users.FailedLogins,
+                    db.Users.LastFailedLoginDate,
+                    db.Users.LastFailedLoginIPAddress,
+                    db.Users.LastSuccessfulLoginDate,
+                    db.Users.LastSuccessfulLoginIPAddress,
+                    db.Users.CreatedDate,
+                    db.Users.LastUpdated,
+                    db.Users.lastUpdatedBy,
+
+                    db.UserRoles.RoleGuid,
+                    db.Roles.RoleName
+                )
+                .Join(db.UserRoles)
+                .On(db.Users.Guid == db.UserRoles.UserGuid)
+                .Join(db.Roles)
+                .On(db.UserRoles.RoleGuid == db.Roles.RoleGuid)
+                .Where(db.Users.Guid == identifier).FirstOrDefault();
+
             return uRow;
         }
 
