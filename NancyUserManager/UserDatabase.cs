@@ -133,10 +133,9 @@ namespace NancyUserManager
 
         public static IEnumerable<Users> GetAllUsers()
         {
-            // simple data used to get all the users and ordered by create date
             var db = Database.Open();
 
-            // here we join in the UserRoles and Roles tables to get the users RoleName.
+            // Using Simple.Data here we join in the UserRoles and Roles tables to get the users RoleName.
             IEnumerable<Users> uRows = db.Users.All()
               .Select(
                 db.Users.Guid,
