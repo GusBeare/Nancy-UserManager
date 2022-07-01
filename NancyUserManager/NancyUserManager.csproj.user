@@ -4,6 +4,7 @@
     <NameOfLastUsedPublishProfile>NancyUserManager</NameOfLastUsedPublishProfile>
     <ProjectView>ProjectFiles</ProjectView>
     <UseIISExpress>false</UseIISExpress>
+    <LastActiveSolutionConfig>Debug|Any CPU</LastActiveSolutionConfig>
     <Use64BitIISExpress />
     <IISExpressSSLPort />
     <IISExpressAnonymousAuthentication />
